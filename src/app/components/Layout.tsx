@@ -8,12 +8,11 @@ export function Layout() {
     { path: "/donate", label: "🤝 Donate" },
     { path: "/homes", label: "🏠 Find Home" },
     { path: "/food-guide", label: "📋 Food Guide" },
+    { path: "/vacancies", label: "🐾 Vacancies" },
   ];
 
   const isActive = (path: string) => {
-    if (path === "/") {
-      return location.pathname === "/";
-    }
+    if (path === "/") return location.pathname === "/";
     return location.pathname.startsWith(path);
   };
 
@@ -26,9 +25,7 @@ export function Layout() {
               <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-md">
                 <span className="text-2xl">🐾</span>
               </div>
-              <h1 className="text-white font-bold text-xl md:text-2xl">
-                PawPoint Faisal Town
-              </h1>
+              <h1 className="text-white font-bold text-xl md:text-2xl">PawPoint Faisal Town</h1>
             </div>
           </div>
           <nav className="flex gap-2 mt-3 overflow-x-auto pb-1">
@@ -48,10 +45,7 @@ export function Layout() {
           </nav>
         </div>
       </header>
-
-      <main>
-        <Outlet />
-      </main>
+      <main><Outlet /></main>
     </div>
   );
 }
