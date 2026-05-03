@@ -36,7 +36,11 @@ export function NGODonation() {
 
   useEffect(() => {
     readBin("ngos").then((data) => {
-      setNgos(data.length > 0 ? data : DEFAULT_NGOS);
+      if (data.length > 0) {
+        setNgos(data);
+      } else {
+        writeBin("ngos", DEFAULT_NGOS).then(() => setNgos(DEFAULT_NGOS));
+      }
       setLoading(false);
     }).catch(() => { setNgos(DEFAULT_NGOS); setLoading(false); });
   }, []);
