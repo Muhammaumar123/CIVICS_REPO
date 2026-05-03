@@ -16,15 +16,15 @@ interface BowlLocation {
   lng: number;
 }
 
-// Real Faisal Town Lahore coordinates
-const FAISAL_TOWN_CENTER = { lat: 31.5010, lng: 74.3587 };
+// Correct Faisal Town Lahore coordinates
+const FAISAL_TOWN_CENTER = { lat: 31.4761, lng: 74.3044 };
 
 const DEFAULT_BOWLS: BowlLocation[] = [
-  { id: 1, name: "Park View Corner",       note: "Near main gate, shaded area",    lat: 31.5025, lng: 74.3570 },
-  { id: 2, name: "Green Valley Junction",  note: "Behind community center",        lat: 31.5005, lng: 74.3610 },
-  { id: 3, name: "Sunrise Street End",     note: "Next to chai shop",              lat: 31.4995, lng: 74.3555 },
-  { id: 4, name: "Market Square",          note: "Outside grocery store",          lat: 31.5018, lng: 74.3598 },
-  { id: 5, name: "Garden Lane",            note: "Under the big tree",             lat: 31.5033, lng: 74.3625 },
+  { id: 1, name: "Block A Park Corner",    note: "Near main gate, shaded area",    lat: 31.4775, lng: 74.3030 },
+  { id: 2, name: "Block B Junction",       note: "Behind community center",        lat: 31.4755, lng: 74.3060 },
+  { id: 3, name: "FAST-NUCES Gate",        note: "Next to university side gate",   lat: 31.4748, lng: 74.3018 },
+  { id: 4, name: "Main Market Square",     note: "Outside grocery store",          lat: 31.4768, lng: 74.3050 },
+  { id: 5, name: "Central Park Lane",      note: "Under the big tree",             lat: 31.4780, lng: 74.3065 },
 ];
 
 // Generates a real QR code SVG using the qrcode SVG path approach (pure, no lib needed)
@@ -242,19 +242,29 @@ export function BowlMap() {
           </div>
           <div className="space-y-2 max-h-44 overflow-y-auto pr-1">
             {bowlLocations.map((location) => (
-              <button
-                key={location.id}
-                onClick={() => {
-                  setSelectedBowl(location);
-                  if (mapRef.current) {
-                    mapRef.current.setView([location.lat, location.lng], 17);
-                  }
-                }}
-                className="w-full text-left bg-[#FFFBF5] rounded-xl p-3 border-2 border-[#FBBF24]/30 hover:border-[#F97316]/50 transition-colors"
-              >
-                <p className="font-bold text-gray-800 text-sm">{location.name}</p>
-                <p className="text-xs text-gray-500">{location.note}</p>
-              </button>
+              <div key={location.id} className="flex items-center gap-2">
+                <button
+                  onClick={() => {
+                    setSelectedBowl(location);
+                    if (mapRef.current) {
+                      mapRef.current.setView([location.lat, location.lng], 17);
+                    }
+                  }}
+                  className="flex-1 text-left bg-[#FFFBF5] rounded-xl p-3 border-2 border-[#FBBF24]/30 hover:border-[#F97316]/50 transition-colors"
+                >
+                  <p className="font-bold text-gray-800 text-sm">{location.name}</p>
+                  <p className="text-xs text-gray-500">{location.note}</p>
+                </button>
+                {isAuthenticated && (
+                  <button
+                    onClick={() => setBowlLocations(bowlLocations.filter((b) => b.id !== location.id))}
+                    className="flex-shrink-0 bg-red-100 text-red-500 hover:bg-red-200 p-2 rounded-lg transition-colors"
+                    title="Delete bowl"
+                  >
+                    <X size={16} />
+                  </button>
+                )}
+              </div>
             ))}
           </div>
         </div>
